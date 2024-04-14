@@ -9,4 +9,4 @@
 
 Extra Credit
 
-1. In App.jsx, the useEffect method uses fetch with then. Change it to use Async/Await
+1. In App.jsx, the useEffect method uses fetch with then. Change it to use Async/Await 

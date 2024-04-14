@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
@@ -6,7 +6,11 @@ import RecipeContainer from "./Components/RecipeContainer";
 import "./assets/style.css";
 
 function App() {
+
   const [recipes, setRecipes] = useState([]);
+  const deleteRecipe = (id) =>{
+    setRecipes(recipes.filter(recipe => recipe.id !== id));
+  }
   useEffect(() => {
     fetch("https://api.sampleapis.com/recipes/recipes")
       .then((res) => {
@@ -19,17 +23,17 @@ function App() {
   }, []);
   function filterRecipesComputeIntensive(recipes) {
     const now = performance.now();
-    while (performance.now() - now < 8000) {
+    while (performance.now() - now < 3000) {
       //spin()
     }
-    return list.filter((word) => word.name.split(" ").length <= 4);
+    return recipes;
   }
-  const filteredRecipes = filterRecipesComputeIntensive(recipes);
+  const filteredRecipes = useMemo (() =>filterRecipesComputeIntensive(recipes), [recipes]);
   return (
     <>
       <Navbar />
-      {recipes.map((data) => (
-        <RecipeContainer recipe={data} key={data.id} />
+      {filteredRecipes.map((data) => (
+        <RecipeContainer recipe={data} key={data.id} deleteRecipe={deleteRecipe}/>
       ))}
       <Footer />
     </>
