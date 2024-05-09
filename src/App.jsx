@@ -35,7 +35,9 @@ function App() {
       {filteredRecipes.map((data) => (
         <RecipeContainer recipe={data} key={data.id} deleteRecipe={deleteRecipe}/>
       ))}
+   
       <Footer />
+      
     </>
   );
 }
